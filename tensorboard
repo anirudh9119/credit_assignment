@@ -1,0 +1,1 @@
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/u/goyalani/anaconda2/lib /data/lisatmp3/bilaniuo/local/bin/python3.6 /u/goyalani/.local/lib/python3.6/site-packages/tensorboard/main.py --logdir=./logs

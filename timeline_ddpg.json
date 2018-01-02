@@ -1,0 +1,839 @@
+{
+    "traceEvents": [
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 0,
+            "args": {
+                "name": "Allocators"
+            }
+        },
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 1,
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/cpu:0 Compute"
+            }
+        },
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 2,
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/cpu:0 Tensors"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "NoOp",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177028,
+            "dur": 10,
+            "args": {
+                "name": "_SOURCE",
+                "op": "NoOp"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Const",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177046,
+            "dur": 9,
+            "args": {
+                "name": "clip_by_value_1/Minimum/y",
+                "op": "Const"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Const",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177056,
+            "dur": 4,
+            "args": {
+                "name": "clip_by_value_1/y",
+                "op": "Const"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Const",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177062,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/concat/axis",
+                "op": "Const"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Const",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177068,
+            "dur": 4,
+            "args": {
+                "name": "sub/x",
+                "op": "Const"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Const",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177073,
+            "dur": 5,
+            "args": {
+                "name": "mul/y",
+                "op": "Const"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177079,
+            "dur": 8,
+            "args": {
+                "name": "target_critic/dense_2/bias",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177089,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/dense_2/bias/read",
+                "op": "Identity",
+                "input0": "target_critic/dense_2/bias"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177095,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/dense_2/kernel",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177102,
+            "dur": 3,
+            "args": {
+                "name": "target_critic/dense_2/kernel/read",
+                "op": "Identity",
+                "input0": "target_critic/dense_2/kernel"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177107,
+            "dur": 5,
+            "args": {
+                "name": "target_critic/dense_1/bias",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177113,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/dense_1/bias/read",
+                "op": "Identity",
+                "input0": "target_critic/dense_1/bias"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177119,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/dense_1/kernel",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177125,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/dense_1/kernel/read",
+                "op": "Identity",
+                "input0": "target_critic/dense_1/kernel"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177131,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/dense/bias",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177137,
+            "dur": 4,
+            "args": {
+                "name": "target_critic/dense/bias/read",
+                "op": "Identity",
+                "input0": "target_critic/dense/bias"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177142,
+            "dur": 5,
+            "args": {
+                "name": "target_critic/dense/kernel",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177149,
+            "dur": 3,
+            "args": {
+                "name": "target_critic/dense/kernel/read",
+                "op": "Identity",
+                "input0": "target_critic/dense/kernel"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177154,
+            "dur": 5,
+            "args": {
+                "name": "target_actor/dense_2/bias",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177161,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense_2/bias/read",
+                "op": "Identity",
+                "input0": "target_actor/dense_2/bias"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177166,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense_2/kernel",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177172,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense_2/kernel/read",
+                "op": "Identity",
+                "input0": "target_actor/dense_2/kernel"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177178,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense_1/bias",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177184,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense_1/bias/read",
+                "op": "Identity",
+                "input0": "target_actor/dense_1/bias"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177189,
+            "dur": 5,
+            "args": {
+                "name": "target_actor/dense_1/kernel",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177195,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense_1/kernel/read",
+                "op": "Identity",
+                "input0": "target_actor/dense_1/kernel"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177201,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense/bias",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177207,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense/bias/read",
+                "op": "Identity",
+                "input0": "target_actor/dense/bias"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "VariableV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177212,
+            "dur": 5,
+            "args": {
+                "name": "target_actor/dense/kernel",
+                "op": "VariableV2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Identity",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177219,
+            "dur": 4,
+            "args": {
+                "name": "target_actor/dense/kernel/read",
+                "op": "Identity",
+                "input0": "target_actor/dense/kernel"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "_Arg",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177224,
+            "dur": 5,
+            "args": {
+                "name": "_arg_obs1_0_0",
+                "op": "_Arg"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Minimum",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177231,
+            "dur": 8,
+            "args": {
+                "name": "clip_by_value_1/Minimum",
+                "op": "Minimum",
+                "input0": "_arg_obs1_0_0",
+                "input1": "clip_by_value_1/Minimum/y"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Maximum",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177242,
+            "dur": 5,
+            "args": {
+                "name": "clip_by_value_1",
+                "op": "Maximum",
+                "input0": "clip_by_value_1/Minimum",
+                "input1": "clip_by_value_1/y"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "MatMul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177250,
+            "dur": 52,
+            "args": {
+                "name": "target_critic/dense/MatMul",
+                "op": "MatMul",
+                "input0": "clip_by_value_1",
+                "input1": "target_critic/dense/kernel/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "BiasAdd",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177305,
+            "dur": 25,
+            "args": {
+                "name": "target_critic/dense/BiasAdd",
+                "op": "BiasAdd",
+                "input0": "target_critic/dense/MatMul",
+                "input1": "target_critic/dense/bias/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Relu",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177333,
+            "dur": 8,
+            "args": {
+                "name": "target_critic/Relu",
+                "op": "Relu",
+                "input0": "target_critic/dense/BiasAdd"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "MatMul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177343,
+            "dur": 23,
+            "args": {
+                "name": "target_actor/dense/MatMul",
+                "op": "MatMul",
+                "input0": "clip_by_value_1",
+                "input1": "target_actor/dense/kernel/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "BiasAdd",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177368,
+            "dur": 25,
+            "args": {
+                "name": "target_actor/dense/BiasAdd",
+                "op": "BiasAdd",
+                "input0": "target_actor/dense/MatMul",
+                "input1": "target_actor/dense/bias/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Relu",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177396,
+            "dur": 8,
+            "args": {
+                "name": "target_actor/Relu",
+                "op": "Relu",
+                "input0": "target_actor/dense/BiasAdd"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "MatMul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439177406,
+            "dur": 671,
+            "args": {
+                "name": "target_actor/dense_2/MatMul",
+                "op": "MatMul",
+                "input0": "target_actor/Relu",
+                "input1": "target_actor/dense_1/kernel/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "BiasAdd",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178080,
+            "dur": 19,
+            "args": {
+                "name": "target_actor/dense_2/BiasAdd",
+                "op": "BiasAdd",
+                "input0": "target_actor/dense_2/MatMul",
+                "input1": "target_actor/dense_1/bias/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Relu",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178102,
+            "dur": 7,
+            "args": {
+                "name": "target_actor/Relu_1",
+                "op": "Relu",
+                "input0": "target_actor/dense_2/BiasAdd"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "MatMul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178111,
+            "dur": 15,
+            "args": {
+                "name": "target_actor/dense_3/MatMul",
+                "op": "MatMul",
+                "input0": "target_actor/Relu_1",
+                "input1": "target_actor/dense_2/kernel/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "BiasAdd",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178128,
+            "dur": 5,
+            "args": {
+                "name": "target_actor/dense_3/BiasAdd",
+                "op": "BiasAdd",
+                "input0": "target_actor/dense_3/MatMul",
+                "input1": "target_actor/dense_2/bias/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Softmax",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178135,
+            "dur": 12,
+            "args": {
+                "name": "target_actor/Softmax",
+                "op": "Softmax",
+                "input0": "target_actor/dense_3/BiasAdd"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "ConcatV2",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178150,
+            "dur": 18,
+            "args": {
+                "name": "target_critic/concat",
+                "op": "ConcatV2",
+                "input0": "target_critic/Relu",
+                "input1": "target_actor/Softmax",
+                "input2": "target_critic/concat/axis"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "MatMul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178171,
+            "dur": 665,
+            "args": {
+                "name": "target_critic/dense_2/MatMul",
+                "op": "MatMul",
+                "input0": "target_critic/concat",
+                "input1": "target_critic/dense_1/kernel/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "BiasAdd",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178839,
+            "dur": 22,
+            "args": {
+                "name": "target_critic/dense_2/BiasAdd",
+                "op": "BiasAdd",
+                "input0": "target_critic/dense_2/MatMul",
+                "input1": "target_critic/dense_1/bias/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Relu",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178863,
+            "dur": 7,
+            "args": {
+                "name": "target_critic/Relu_1",
+                "op": "Relu",
+                "input0": "target_critic/dense_2/BiasAdd"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "MatMul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178872,
+            "dur": 58,
+            "args": {
+                "name": "target_critic/dense_3/MatMul",
+                "op": "MatMul",
+                "input0": "target_critic/Relu_1",
+                "input1": "target_critic/dense_2/kernel/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "BiasAdd",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178933,
+            "dur": 5,
+            "args": {
+                "name": "target_critic/dense_3/BiasAdd",
+                "op": "BiasAdd",
+                "input0": "target_critic/dense_3/MatMul",
+                "input1": "target_critic/dense_2/bias/read"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "_Arg",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178941,
+            "dur": 4,
+            "args": {
+                "name": "_arg_rewards_0_1",
+                "op": "_Arg"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "_Arg",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178946,
+            "dur": 4,
+            "args": {
+                "name": "_arg_terminals1_0_2",
+                "op": "_Arg"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Sub",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178952,
+            "dur": 7,
+            "args": {
+                "name": "sub",
+                "op": "Sub",
+                "input0": "sub/x",
+                "input1": "_arg_terminals1_0_2"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Mul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178962,
+            "dur": 5,
+            "args": {
+                "name": "mul",
+                "op": "Mul",
+                "input0": "sub",
+                "input1": "mul/y"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Mul",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178970,
+            "dur": 5,
+            "args": {
+                "name": "mul_1",
+                "op": "Mul",
+                "input0": "mul",
+                "input1": "target_critic/dense_3/BiasAdd"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Add",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178977,
+            "dur": 5,
+            "args": {
+                "name": "add",
+                "op": "Add",
+                "input0": "_arg_rewards_0_1",
+                "input1": "mul_1"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "_Retval",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1507674439178985,
+            "dur": 4,
+            "args": {
+                "name": "_retval_add_0_0",
+                "op": "_Retval",
+                "input0": "add"
+            }
+        }
+    ]
+}
