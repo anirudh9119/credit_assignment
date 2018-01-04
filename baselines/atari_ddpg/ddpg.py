@@ -6,8 +6,8 @@ import tensorflow as tf
 import tensorflow.contrib as tc
 
 from baselines import logger
-from baselines.common.mpi_adam import MpiAdam
-import baselines.common.tf_util as U
+#from baselines.common.mpi_adam import MpiAdam
+#import baselines.common.tf_util as U
 from baselines.common.mpi_running_mean_std import RunningMeanStd
 from baselines.atari_ddpg.util import reduce_std, mpi_mean
 
@@ -139,8 +139,8 @@ class DDPG(object):
         self.setup_target_network_updates()
 
     def setup_target_network_updates(self):
-        actor_init_updates, actor_soft_updates = get_target_updates(self.actor.vars, self.target_actor.vars, self.tau)
-        critic_init_updates, critic_soft_updates = get_target_updates(self.critic.vars, self.target_critic.vars, self.tau)
+        actor_init_updates, actor_soft_updates = get_target_updates(self.actor.trainable_vars, self.target_actor.vars, self.tau)
+        critic_init_updates, critic_soft_updates = get_target_updates(self.critic.trainable_vars, self.target_critic.vars, self.tau)
         self.target_init_updates = [actor_init_updates, critic_init_updates]
         self.target_soft_updates = [actor_soft_updates, critic_soft_updates]
 
@@ -170,9 +170,13 @@ class DDPG(object):
         actor_nb_params = sum([reduce(lambda x, y: x * y, shape) for shape in actor_shapes])
         logger.info('  actor shapes: {}'.format(actor_shapes))
         logger.info('  actor params: {}'.format(actor_nb_params))
-        self.actor_grads = U.flatgrad(self.actor_loss, self.actor.trainable_vars, clip_norm=self.clip_norm)
-        self.actor_optimizer = MpiAdam(var_list=self.actor.trainable_vars,
-            beta1=0.9, beta2=0.999, epsilon=1e-08)
+        self.actor_grads = tf.gradients(self.actor_loss, self.actor.trainable_vars)
+        #U.flatgrad(self.actor_loss, self.actor.trainable_vars, clip_norm=self.clip_norm)
+        self.actor_grads, self.actor_grad_norm = tf.clip_by_global_norm(self.actor_grads, self.clip_norm)
+        #self.actor_optimizer = MpiAdam(var_list=self.actor.trainable_vars,
+        #    beta1=0.9, beta2=0.999, epsilon=1e-08)
+        self.actor_optimizer = tf.train.AdamOptimizer(self.actor_lr, beta1=0.9, beta2=0.999, epsilon=1e-08).apply_gradients(zip(self.actor_grads,self.actor.trainable_vars))
+
 
     def setup_critic_optimizer(self):
         logger.info('setting up critic optimizer')
@@ -194,9 +198,12 @@ class DDPG(object):
         critic_nb_params = sum([reduce(lambda x, y: x * y, shape) for shape in critic_shapes])
         logger.info('  critic shapes: {}'.format(critic_shapes))
         logger.info('  critic params: {}'.format(critic_nb_params))
-        self.critic_grads = U.flatgrad(self.critic_loss, self.critic.trainable_vars, clip_norm=self.clip_norm)
-        self.critic_optimizer = MpiAdam(var_list=self.critic.trainable_vars,
-            beta1=0.9, beta2=0.999, epsilon=1e-08)
+        #self.critic_grads = U.flatgrad(self.critic_loss, self.critic.trainable_vars, clip_norm=self.clip_norm)
+        #self.critic_optimizer = MpiAdam(var_list=self.critic.trainable_vars,
+        #    beta1=0.9, beta2=0.999, epsilon=1e-08)
+        self.critic_grads = tf.gradients(self.critic_loss, self.critic.trainable_vars)
+        self.critic_grads, self.critic_grad_norm = tf.clip_by_global_norm(self.critic_grads, self.clip_norm)
+        self.critic_optimizer = tf.train.AdamOptimizer(self.critic_lr, beta1=0.9, beta2=0.999, epsilon=1e-08).apply_gradients(zip(self.critic_grads,self.critic.trainable_vars))
 
     def setup_popart(self):
         # See https://arxiv.org/pdf/1602.07714.pdf for details.
@@ -279,7 +286,8 @@ class DDPG(object):
 
     def train(self, train_only_actor=False):
         # Get a batch.
-
+        import time
+        #t1= time.time()
         minibatch = self.memory.sample(self.batch_size)
         obs0 = np.asarray([data[0] for data in minibatch])#.astype('float32')
         action = np.asarray([data[1] for data in minibatch])#.astype('float32')
@@ -289,6 +297,8 @@ class DDPG(object):
         rewards = rewards.reshape([self.batch_size, 1])#.astype('float32')
         terminal1 = terminal1.reshape([self.batch_size, 1])#.astype('float32')
         action = action.reshape([self.batch_size, -1])#.astype('float32')
+        #t2= time.time()
+        #print('First Update', t2-t1)
         if self.normalize_returns and self.enable_popart:
             old_mean, old_std, target_Q = self.sess.run([self.ret_rms.mean, self.ret_rms.std, self.target_Q], feed_dict={
                 self.obs1: obs1,#batch['obs1'],
@@ -305,29 +315,42 @@ class DDPG(object):
             #from tensorflow.python.client import timeline
             #run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
             #run_metadata = tf.RunMetadata()
+            #t3= time.time()
             target_Q = self.sess.run(self.target_Q, feed_dict={
                 self.obs1: obs1,#batch['obs1']
                 self.rewards: rewards,#batch['rewards']
                 self.terminals1: terminal1.astype('float32'),
             })#, options=run_options, run_metadata=run_metadata)
-        ops = [self.actor_grads, self.actor_loss, self.entropy_cost, self.critic_grads, self.critic_loss]
-        actor_grads, actor_loss, entropy_cost, critic_grads, critic_loss = self.sess.run(ops, feed_dict={
+            #t4 = time.time()
+            #print("Second update", t4-t3)
+        ops = [self.actor_grads, self.actor_loss, self.entropy_cost, self.critic_grads, self.critic_loss, self.actor_grad_norm, self.critic_grad_norm]
+        #t5 = time.time()
+        actor_grads, actor_loss, entropy_cost, critic_grads, critic_loss, actor_grad_norm, critic_grad_norm = self.sess.run(ops, feed_dict={
             self.obs0: obs0,#batch['obs0'],
             self.actions: action,#batch['actions'],
             self.critic_target: target_Q,
         })
-        self.actor_optimizer.update(actor_grads, stepsize=self.actor_lr)
         if train_only_actor == True:
-            print('training only actor')
-            self.critic_optimizer.update(critic_grads, stepsize=self.critic_lr)
+            t7 = time.time()
+            self.actor_optimizer.update(actor_grads, stepsize=self.actor_lr)
+            t8 = time.time()
+            print("Fourth Updonate", t8-t7)
             return critic_loss, actor_loss, entropy_cost, actor_grads
-        return critic_loss, actor_loss, entropy_cost, actor_grads, critic_grads
+        else:
+            t7 = time.time()
+            #print('training tactor as well as critic')
+            #self.actor_optimizer.update(actor_grads, stepsize=self.actor_lr)
+            self.sess.run(self.actor_optimizer,feed_dict={self.obs0:obs0})
+            t8 = time.time()
+            self.sess.run(self.critic_optimizer,feed_dict={self.obs1:obs1, self.actions:action, self.critic_target: target_Q, self.obs0:obs0})
+            #self.critic_optimizer.update(critic_grads, stepsize=self.critic_lr)
+        return critic_loss, actor_loss, entropy_cost, actor_grads, critic_grads, actor_grad_norm, critic_grad_norm
 
     def initialize(self, sess):
         self.sess = sess
         self.sess.run(tf.global_variables_initializer())
-        self.actor_optimizer.sync()
-        self.critic_optimizer.sync()
+        #self.actor_optimizer.sync()
+        #self.critic_optimizer.sync()
         self.sess.run(self.target_init_updates)
 
     def update_target_net(self):

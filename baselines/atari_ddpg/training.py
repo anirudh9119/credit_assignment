@@ -6,7 +6,7 @@ import time
 from baselines.atari_ddpg.ddpg import DDPG
 #from baselines.atari_ddpg.util import mpi_mean, mpi_std, mpi_sum
 import baselines.common.tf_util as U
-import numpy
+#import numpy
 from baselines import logger
 import numpy as np
 #import tensorflow as tf
@@ -97,11 +97,14 @@ def train(env, env_id, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, re
             reward_per_episode += r
             if memory.count() >  10000:#REPLAY_START_SIZE
                 i1 = time.time()
-                cl, al, entropy_cost, actor_grads, critic_grads = agent.train()
+                cl, al, entropy_cost, actor_grads, critic_grads, actor_norm, critic_norm = agent.train()
                 i2 = time.time()
+
                 if num_frames %100 ==0:
-                    print("Time for update:", i2 -i1, "critic cost:", cl, "actor_cost:", al, "entropy:",  entropy_cost, "actor norm:", numpy.linalg.norm(actor_grads), "critic norm:", numpy.linalg.norm(critic_grads), "action:", action)
+                    print("Time for update:", i2-i1)
+                    print("Time for update:", i2 -i1, "critic cost:", cl, "actor_cost:", al, "entropy:",  entropy_cost, "actor norm:", actor_norm, "critic norm:",critic_norm, "action:", action)
             obs = new_obs
+
             if done or current_game_frames > MAX_TRAINING_STEPS:
                 obs = env.reset()
                 num_games += 1
@@ -109,10 +112,13 @@ def train(env, env_id, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, re
                 hist_logger.log_histogram(name_, reward_per_episode, num_games)
                 current_game_frames = 0
                 reward_per_episode = 0
-                if memory.count() > 10000:
-                    for num_up  in range(25):
-                        cl, al, entropy_cost, actor_grads = agent.train(train_only_actor=True)
-                        print("critic_cost:", cl, "actor_cost:", al, "entropy:",  entropy_cost, "actor norm:", numpy.linalg.norm(actor_grads))
+                #if memory.count() > 10000:
+                #    for num_up  in range(25):
+                #        t1 = time.time()
+                #        cl, al, entropy_cost, actor_grads = agent.train(train_only_actor=True)
+                #        t2= time.time()
+                #        print("Time for only actor update:", t2-t1, "critic_cost:", cl, "actor_cost:", al, "entropy:",  entropy_cost, "actor norm:", numpy.linalg.norm(actor_grads))
+
             if num_frames % 10000 == 0:
                 new_time = time.time()
                 diff = new_time - last_time
@@ -120,6 +126,7 @@ def train(env, env_id, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, re
                 elapsed_frames = num_frames - last_frame_count
                 last_frame_count = num_frames
                 print("frames: ",num_frames,"    games: ",num_games,"    speed: ",(elapsed_frames/diff)," frames/second")
+
         '''
         for epoch in range(nb_epochs):
             for cycle in range(nb_epoch_cycles):
