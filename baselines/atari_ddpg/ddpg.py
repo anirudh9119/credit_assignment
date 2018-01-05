@@ -287,7 +287,6 @@ class DDPG(object):
     def train(self, train_only_actor=False):
         # Get a batch.
         import time
-        #t1= time.time()
         minibatch = self.memory.sample(self.batch_size)
         obs0 = np.asarray([data[0] for data in minibatch])#.astype('float32')
         action = np.asarray([data[1] for data in minibatch])#.astype('float32')
@@ -297,8 +296,6 @@ class DDPG(object):
         rewards = rewards.reshape([self.batch_size, 1])#.astype('float32')
         terminal1 = terminal1.reshape([self.batch_size, 1])#.astype('float32')
         action = action.reshape([self.batch_size, -1])#.astype('float32')
-        #t2= time.time()
-        #print('First Update', t2-t1)
         if self.normalize_returns and self.enable_popart:
             old_mean, old_std, target_Q = self.sess.run([self.ret_rms.mean, self.ret_rms.std, self.target_Q], feed_dict={
                 self.obs1: obs1,#batch['obs1'],
@@ -315,16 +312,12 @@ class DDPG(object):
             #from tensorflow.python.client import timeline
             #run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
             #run_metadata = tf.RunMetadata()
-            #t3= time.time()
             target_Q = self.sess.run(self.target_Q, feed_dict={
                 self.obs1: obs1,#batch['obs1']
                 self.rewards: rewards,#batch['rewards']
                 self.terminals1: terminal1.astype('float32'),
             })#, options=run_options, run_metadata=run_metadata)
-            #t4 = time.time()
-            #print("Second update", t4-t3)
         ops = [self.actor_grads, self.actor_loss, self.entropy_cost, self.critic_grads, self.critic_loss, self.actor_grad_norm, self.critic_grad_norm]
-        #t5 = time.time()
         actor_grads, actor_loss, entropy_cost, critic_grads, critic_loss, actor_grad_norm, critic_grad_norm = self.sess.run(ops, feed_dict={
             self.obs0: obs0,#batch['obs0'],
             self.actions: action,#batch['actions'],
@@ -334,16 +327,14 @@ class DDPG(object):
             t7 = time.time()
             self.actor_optimizer.update(actor_grads, stepsize=self.actor_lr)
             t8 = time.time()
-            print("Fourth Updonate", t8-t7)
+            print("Fourth Update", t8-t7)
             return critic_loss, actor_loss, entropy_cost, actor_grads
         else:
-            t7 = time.time()
-            #print('training tactor as well as critic')
-            #self.actor_optimizer.update(actor_grads, stepsize=self.actor_lr)
+            #t7 = time.time()
             self.sess.run(self.actor_optimizer,feed_dict={self.obs0:obs0})
-            t8 = time.time()
             self.sess.run(self.critic_optimizer,feed_dict={self.obs1:obs1, self.actions:action, self.critic_target: target_Q, self.obs0:obs0})
-            #self.critic_optimizer.update(critic_grads, stepsize=self.critic_lr)
+            #t8 = time.time()
+            #print("Fifth Update", t8-t7)
         return critic_loss, actor_loss, entropy_cost, actor_grads, critic_grads, actor_grad_norm, critic_grad_norm
 
     def initialize(self, sess):

@@ -109,7 +109,8 @@ def train(env, env_id, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, re
                 obs = env.reset()
                 num_games += 1
                 print("episode:", num_games, "Total reward:", reward_per_episode, "Number of steps:", current_game_frames)
-                hist_logger.log_histogram(name_, reward_per_episode, num_games)
+                #hist_logger.log_histogram(name_, reward_per_episode, num_games)
+                hist_logger.log_scalar(name_, reward_per_episode, num_frames)
                 current_game_frames = 0
                 reward_per_episode = 0
                 #if memory.count() > 10000:
@@ -256,4 +257,4 @@ def train(env, env_id, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, re
                 if eval_env and hasattr(eval_env, 'get_state'):
                     with open(os.path.join(logdir, 'eval_env_state.pkl'), 'wb') as f:
                         pickle.dump(eval_env.get_state(), f)
-        '''
+            '''
