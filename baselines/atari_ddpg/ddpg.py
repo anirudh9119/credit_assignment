@@ -176,6 +176,7 @@ class DDPG(object):
         #self.actor_optimizer = MpiAdam(var_list=self.actor.trainable_vars,
         #    beta1=0.9, beta2=0.999, epsilon=1e-08)
         self.actor_optimizer = tf.train.AdamOptimizer(self.actor_lr, beta1=0.9, beta2=0.999, epsilon=1e-08).apply_gradients(zip(self.actor_grads,self.actor.trainable_vars))
+        #self.actor_optimizer = tf.train.RMSPropOptimizer(self.actor_lr, decay=0.99, epsilon=1e-5).apply_gradients(zip(self.actor_grads,self.actor.trainable_vars))
 
 
     def setup_critic_optimizer(self):
@@ -202,7 +203,7 @@ class DDPG(object):
         #self.critic_optimizer = MpiAdam(var_list=self.critic.trainable_vars,
         #    beta1=0.9, beta2=0.999, epsilon=1e-08)
         self.critic_grads = tf.gradients(self.critic_loss, self.critic.trainable_vars)
-        self.critic_grads, self.critic_grad_norm = tf.clip_by_global_norm(self.critic_grads, self.clip_norm)
+        self.critic_grads, self.critic_grad_norm = tf.clip_by_global_norm(self.critic_grads, 10)
         self.critic_optimizer = tf.train.AdamOptimizer(self.critic_lr, beta1=0.9, beta2=0.999, epsilon=1e-08).apply_gradients(zip(self.critic_grads,self.critic.trainable_vars))
 
     def setup_popart(self):

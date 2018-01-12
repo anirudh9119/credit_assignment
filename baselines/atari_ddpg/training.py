@@ -40,7 +40,7 @@ def train(env, env_id, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, re
     if batch_norm == True:
         bn = 1
 
-    name_ = env_id + '_actor_learning_rate_' + np.str(actor_lr) + '_critic_lr_' + np.str(critic_lr) + '_entropy_weight_' + np.str(entropy_weight) + '_layer_norm_' + np.str(ln)  + '_batch_norm_' + np.str(bn) +  '_clip_norm_' + np.str(clip_norm) + '_'+ str(random.randint(1000, 9999))
+    name_ = env_id + '_actor_learning_rate_' + np.str(actor_lr) + '_critic_lr_' + np.str(critic_lr) + '_entropy_weight_' + np.str(entropy_weight) + '_layer_norm_' + np.str(ln)  + '_batch_norm_' + np.str(bn) +  '_clip_norm_' + np.str(clip_norm) + '_'+ str(random.randint(1000, 1200))
 
     '''
     step = 0
@@ -111,6 +111,7 @@ def train(env, env_id, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, re
                 print("episode:", num_games, "Total reward:", reward_per_episode, "Number of steps:", current_game_frames)
                 #hist_logger.log_histogram(name_, reward_per_episode, num_games)
                 hist_logger.log_scalar(name_, reward_per_episode, num_frames)
+                #hist_logger.log_scalar(name_ + 'ACTOR_NORM', actor_norm, num_frames)
                 current_game_frames = 0
                 reward_per_episode = 0
                 #if memory.count() > 10000:
